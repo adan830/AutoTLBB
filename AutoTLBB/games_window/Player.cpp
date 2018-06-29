@@ -30,7 +30,8 @@ QDebug operator<<(QDebug qdb, const Player& player)
 QString Player::getName() const
 {
   std::vector<DWORD> adrs{
-    0x145EB34, 0xC, 0x1EC, 0x4, 0x3C
+    0x87C374,0xC,0x1DC,0x4,0x34
+//    0x145EB34, 0xC, 0x1EC, 0x4, 0x3C
   };
 
   QString name;
@@ -38,11 +39,7 @@ QString Player::getName() const
 
   for (int i = 0; i < name.size(); i++)
   {
-    char nameChar = m_gameWindowInfo->readMemory<char>(adrs);
-    if (nameChar == '\0')
-    {
-      break;
-    }
+    auto nameChar = m_gameWindowInfo->readMemory<char>(adrs);
     name[i] = nameChar;
     *(adrs.end()-1) += 0x1;
   }

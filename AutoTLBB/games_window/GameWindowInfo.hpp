@@ -22,55 +22,28 @@ class GameWindowInfo
     void setWindowName(const QString& name);
 
   public:
-    template<typename T>
-    T readMemory(const DWORD address) const
+    template<typename T, typename ...Adrs>
+    T readMemory(const Adrs ...address) const
     {
-      T value;
-
-      auto r = ::ReadProcessMemory(
-            this->m_handle,
-            reinterpret_cast<LPCVOID>(address),
-            reinterpret_cast<LPVOID>(&value),
-            sizeof(T), nullptr
-            );
-      if (r)
-      {
-      }
-      else
-      {
-        qDebug() << "Can not read memory";
-      }
-
-      return value;
-    }
-
-    template<typename T>
-    T readMemory(const std::vector<DWORD>& adrs) const
-    {
+      std::vector<Adrs> adrs{address...};
       DWORD nextOffset = *adrs.cbegin();
       for (std::size_t i = 1; i < adrs.size(); i++)
       {
-        nextOffset = this->readMemory<DWORD>(nextOffset) + adrs.at(i);
-      }
-
-      return this->readMemory<T>(nextOffset);
-    }
-
-    template<typename T, typename Adr, typename... Adrs>
-    T readMemory(char f, const Adr first_adr, const Adrs... adrs) const
-    {
-      const auto adrsArr = {adrs...};
-
-      int i = 0;
-//      Adr nextOffset = adrsArr[i];
-      for (const auto adr : adrsArr)
-      {
-        i++;
-        qDebug() << adr;
+        ::ReadProcessMemory(
+            this->m_handle,
+            reinterpret_cast<LPCVOID>(nextOffset + adrs.at(i)),
+            reinterpret_cast<LPVOID>(&nextOffset),
+            sizeof(DWORD), nullptr
+            );
       }
 
       T value;
-
+      ::ReadProcessMemory(
+            this->m_handle,
+            reinterpret_cast<LPCVOID>(nextOffset),
+            reinterpret_cast<LPVOID>(&value),
+            sizeof(T), nullptr
+            );
       return value;
     }
 
@@ -81,8 +54,8 @@ class GameWindowInfo
     APP_SYNTHESIZE_PTR(Player, m_player, Player)
     APP_SYNTHESIZE_PTR(Settings, m_settings, Settings)
 
-  private:
-    friend QDebug operator<<(QDebug qdb, const GameWindowInfo& gameWindowInfo);
+    private:
+      friend QDebug operator<<(QDebug qdb, const GameWindowInfo& gameWindowInfo);
 };
 
 #endif // GAMEWINDOWINFO_HPP
