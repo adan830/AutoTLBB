@@ -25,6 +25,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # Libraries
 LIBS += -lUser32 -lPsapi
 
+CONFIG += c++11
+
+# Build Dir
+DESTDIR = $$OUT_PWD/bin/Auto
+OBJECTS_DIR = .obj
+MOC_DIR = .moc
+RCC_DIR = .rcc
+UI_DIR = .ui
+
 CONFIG(release, debug|release) {
   CONFIG  += qt warn_off release
   DEFINES += QT_NO_DEBUG_OUTPUT

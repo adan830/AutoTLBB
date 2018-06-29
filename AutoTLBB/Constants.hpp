@@ -6,7 +6,7 @@
 #include <tchar.h>
 
 namespace constants {
-  extern const std::vector<const TCHAR*> gameClassNames;
+  extern const std::vector<const char*> gameClassNames;
 }
 
 #endif // CONSTANTS_HPP

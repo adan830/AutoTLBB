@@ -154,8 +154,8 @@ bool MainWindow::initGamesPlayerList()
 
 static BOOL CALLBACK EnumWindowsProcCallback(HWND hwnd, LPARAM lParam)
 {
-  TCHAR className[MAX_PATH];
-  ::GetClassName(hwnd, className, sizeof(className));
+  char className[MAX_PATH];
+  ::GetClassNameA(hwnd, className, sizeof(className));
 
   auto gamesWindowInfo = reinterpret_cast<ListGameWindowInfo*>(lParam);
 
@@ -163,7 +163,7 @@ static BOOL CALLBACK EnumWindowsProcCallback(HWND hwnd, LPARAM lParam)
   HANDLE handle = nullptr;
   for (const auto& name : constants::gameClassNames)
   {
-    if (::_tcscmp(className, name) != 0)
+    if (std::strcmp(name, className) != 0)
     {
       continue;
     }
