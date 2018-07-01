@@ -1,11 +1,11 @@
 #ifndef GAMEWINDOWINFO_HPP
 #define GAMEWINDOWINFO_HPP
 
-#include <QDebug>
+#include "../player_control_tabs/GeneralTab.hpp"
+#include "../Preprocessor.hpp"
 
 #include <Windows.h>
-#include "../Preprocessor.hpp"
-#include "../player_control_tabs/GeneralTab.hpp"
+#include <QDebug>
 
 class Player;
 class Settings;
@@ -22,10 +22,11 @@ class GameWindowInfo
     void setWindowName(const QString& name);
 
   public:
-    template<typename T, typename ...Adrs>
-    T readMemory(const Adrs ...address) const
+    template<typename T, typename Adr, typename ...Adrs>
+    inline T readMemory(const Adr& adr, const Adrs& ...address) const
     {
-      std::vector<Adrs> adrs{address...};
+      std::vector<Adr> adrs = {adr, address...};
+
       DWORD nextOffset = *adrs.cbegin();
       for (std::size_t i = 1; i < adrs.size(); i++)
       {

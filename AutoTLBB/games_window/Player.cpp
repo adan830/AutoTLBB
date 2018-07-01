@@ -29,20 +29,20 @@ QDebug operator<<(QDebug qdb, const Player& player)
 
 QString Player::getName() const
 {
-  std::vector<DWORD> adrs{
-    0x87C374,0xC,0x1DC,0x4,0x34
+//  std::vector<DWORD> adrs{
+//    0x87C374,0xC,0x1DC,0x4,0x34
 //    0x145EB34, 0xC, 0x1EC, 0x4, 0x3C
-  };
+//  };
 
   QString name;
   name.resize(13);
 
-  for (int i = 0; i < name.size(); i++)
-  {
-    auto nameChar = m_gameWindowInfo->readMemory<char>(adrs);
-    name[i] = nameChar;
-    *(adrs.end()-1) += 0x1;
-  }
+//  for (int i = 0; i < name.size(); i++)
+//  {
+//    auto nameChar = m_gameWindowInfo->readMemory<char>(adrs);
+//    name[i] = nameChar;
+//    *(adrs.end()-1) += 0x1;
+//  }
 
   return name;
 }
@@ -88,22 +88,12 @@ QString Player::getSceneName() const
 
 int Player::getHp() const
 {
-  std::vector<DWORD> adrs{
-    0x145EB34, 0xC, 0x1EC, 0x4, 0x2760
-  };
-
-  m_gameWindowInfo->readMemory<int>('f', 0x145EB34, 0xC, 0x1EC, 0x4, 0x2760);
-
-  return m_gameWindowInfo->readMemory<int>(adrs);
+  return m_gameWindowInfo->readMemory<int>(0x145EB34, 0xC, 0x1EC, 0x4, 0x2760);
 }
 
 int Player::getMaxHp() const
 {
-  std::vector<DWORD> adrs{
-    0x145EB34, 0xC, 0x1EC, 0x4, 0x27D8
-  };
-
-  return m_gameWindowInfo->readMemory<int>(adrs);
+  return m_gameWindowInfo->readMemory<int>(0x145EB34, 0xC, 0x1EC, 0x4, 0x27D8);
 }
 
 float Player::getHpPercent() const
@@ -116,20 +106,12 @@ float Player::getHpPercent() const
 
 int Player::getMp() const
 {
-  std::vector<DWORD> adrs{
-    0x145EB34, 0xC, 0x1EC, 0x4, 0x2764
-  };
-
-  return m_gameWindowInfo->readMemory<int>(adrs);
+  return m_gameWindowInfo->readMemory<int>(0x145EB34, 0xC, 0x1EC, 0x4, 0x2764);
 }
 
 int Player::getMaxMp() const
 {
-  std::vector<DWORD> adrs{
-    0x145EB34, 0xC, 0x1EC, 0x4, 0x27DC
-  };
-
-  return m_gameWindowInfo->readMemory<int>(adrs);
+  return m_gameWindowInfo->readMemory<int>(0x145EB34, 0xC, 0x1EC, 0x4, 0x27DC);
 }
 
 float Player::getMpPercent() const
@@ -142,11 +124,7 @@ float Player::getMpPercent() const
 
 int Player::getMenpaiId() const
 {
-  std::vector<DWORD> adrs{
-    0x145EB34, 0xC, 0x1EC, 0x4, 0xF4
-  };
-
-  return m_gameWindowInfo->readMemory<int>(adrs);
+  return m_gameWindowInfo->readMemory<int>(0x145EB34, 0xC, 0x1EC, 0x4, 0xF4);
 }
 
 QString Player::getMenpaiName() const
@@ -211,20 +189,12 @@ Player::Position Player::getPosition() const
 
 float Player::getPosX() const
 {
-  std::vector<DWORD> adrs{
-    0x145EA78, 0x5C
-  };
-
-  return m_gameWindowInfo->readMemory<float>(adrs);
+  return m_gameWindowInfo->readMemory<float>(0x145EA78, 0x5C);
 }
 
 float Player::getPosY() const
 {
-  std::vector<DWORD> adrs{
-    0x145EA78, 0x64
-  };
-
-  return m_gameWindowInfo->readMemory<float>(adrs);
+  return m_gameWindowInfo->readMemory<float>(0x145EA78, 0x64);
 }
 
 void Player::sendChatMsg(const QString& msg)
