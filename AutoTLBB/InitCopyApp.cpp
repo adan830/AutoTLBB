@@ -2,6 +2,7 @@
 
 #include <QProcess>
 #include <QString>
+#include <QDir>
 
 #include <QDebug>
 

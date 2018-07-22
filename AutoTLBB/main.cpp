@@ -2,7 +2,7 @@
 #include <QApplication>
 
 #ifndef QT_DEBUG
-#  include "InitCopyApp.hpp"
+//#  include "InitCopyApp.hpp"
 #endif
 
 int main(int argc, char *argv[])
@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
   QApplication a(argc, argv);
 
 #ifndef QT_DEBUG
-  (new InitCopyApp());
+//  (new InitCopyApp());
 #endif
 
   MainWindow w;
